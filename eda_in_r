@@ -1,0 +1,61 @@
+
+# Read in data
+data <- read.csv('healthcare_dataset.csv')
+
+
+#EDA
+# Count null values
+# sum(is.na(data))
+
+# Get columns
+names(data)
+
+# Get column types
+sapply(data,class)
+
+# Question: What is the distribution of admission types (Urgent, Emergency, Elective)?
+table(data$Admission.Type)
+
+
+barplot(table(data$Admission.Type),
+        main = "Quantity by admission type",
+        xlab = "Category",
+        ylab = "Frequency",
+        col = "skyblue")
+
+# The admission types are roughly equal
+
+data$Date.of.Admission <- as.Date(data$Date.of.Admission, format = "%Y-%m-%d")
+
+data$Year <- as.factor(format(data$Date.of.Admission,'%Y'))
+data$Month <- factor(format(data$Date.of.Admission, "%b"), levels = month.abb)
+
+# Hospital admission by year
+barplot(table(data$Year),
+        las = 2,
+        col = 'skyblue',
+        main='Admissions by year',
+        xlab = 'Year',
+        ylab = 'Frequency')
+
+# Increase of admissions from 2019 - 2020 has not decreased
+#  as expected if the jump were due to Covid
+
+
+
+# Hospital admissions by Month (all years)
+barplot(table(data$Month),
+        las = 2,
+        col = "skyblue",
+        main='Admissions per Month',
+        xlab = 'Month',
+        ylab = 'Frequency')
+
+head(data$Date.of.Admission)
+
+
+# Ideas
+  # Admissions per hospital over time
+  # Admissions by medical condition per month
+
+
